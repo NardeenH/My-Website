@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Nardeen Hameed</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url('banner2.jpg') no-repeat center center/cover;
+            background-size: cover;
+        }
+        .projects-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #222;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(255, 165, 0, 0.4);
+        }
+        h1, h2 {
+            color: #ff7700;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #ff7700;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #ff5500;
+        }
+        .calculator-container {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            color: white;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #bf7f1f;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #bd7904;
+        }
+        .result {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner"></div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="project.html" class="active">Projects</a></li>
+                <li><a href="resume.html" class="active">Resume</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="projects-container">
+        <h1>My Projects</h1>
+        
+        <!-- Seminar Cost Calculator -->
+        <div class="calculator-container">
+            <h2>Seminar Cost Calculator</h2>
+            <p>Enter the number of students attending:</p>
+            <input type="number" id="students" min="1" value="30" onkeypress="handleKeyPress(event)">
+            <button onclick="calculateCosts()">Calculate</button>
+            <h3>Results:</h3>
+            <p id="results"></p>
+        </div>
+        
+        <div class="section">
+            <h2>GitHub Profile</h2>
+            <a href="https://github.com/nardeenhameed" target="_blank" class="btn">View My GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        function calculateCosts() {
+            let attendees = parseInt(document.getElementById("students").value);
+            if (attendees < 1 || isNaN(attendees)) {
+                document.getElementById("results").innerHTML = "<span style='color:red;'>Please enter a valid number of students.</span>";
+                return;
+            }
+
+            // Revenue Calculation
+            let revenue = attendees * 600;
+
+            // Fixed Costs
+            let fixedCosts = 500 + 400 + 300; // Room, Setup, Postcard Design
+
+            // Variable Costs per person
+            let regCost = attendees * 5;
+            let creditCardFees = attendees * (600 * 0.04);
+            let beverageLunch = attendees * 25;
+            let handouts = attendees * 30;
+
+            // Postcard Costs
+            let postcardPrinting = 5000 * 0.40; // 5000+ postcards
+            let mailingCost = 4000 * 0.35;
+
+            let variableCosts = regCost + creditCardFees + beverageLunch + handouts + postcardPrinting + mailingCost;
+            let totalCosts = fixedCosts + variableCosts;
+            let profit = revenue - totalCosts;
+            let hourlyWorth = profit / 150; // Based on 150 hours of work
+
+            // Display results
+            document.getElementById("results").innerHTML = `
+                <strong>Total Revenue:</strong> $${revenue.toFixed(2)} <br>
+                <strong>Total Costs:</strong> $${totalCosts.toFixed(2)} <br>
+                <strong>Profit:</strong> <span class="result">$${profit.toFixed(2)}</span> <br>
+                <strong>Value of Time per Hour:</strong> <span class="result">$${hourlyWorth.toFixed(2)}</span>
+            `;
+        }
+
+        // Function to trigger calculation when Enter key is pressed
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                calculateCosts();
+            }
+        }
+
+        // Initial Calculation
+        calculateCosts();
+    </script>
+
+</body>
+</html>
